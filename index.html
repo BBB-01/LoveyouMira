@@ -1,1 +1,366 @@
 
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>❤️ For you ❤️</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffb6c1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Luminițe din fundal */
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            filter: blur(80px);
+            top: -150px;
+            left: -150px;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            background: rgba(255, 0, 80, 0.15);
+            border-radius: 50%;
+            filter: blur(80px);
+            bottom: -150px;
+            right: -150px;
+        }
+
+        /* Caseta principală */
+        .card {
+            position: relative;
+            z-index: 10;
+            width: min(90%, 600px);
+            padding: 60px 30px;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 30px;
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+            animation: cardAppear 1.5s ease;
+        }
+
+        .big-heart {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 20px;
+
+            animation: heartbeat 1.3s infinite;
+        }
+
+        h1 {
+            color: white;
+            font-size: clamp(35px, 8vw, 65px);
+            margin-bottom: 20px;
+            text-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            color: white;
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        button {
+            border: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+
+            background: white;
+            color: #ff4f81;
+
+            font-size: 17px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Container pentru inimioare */
+        .hearts {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        /* Fiecare inimioară */
+        .heart {
+            position: absolute;
+            bottom: -50px;
+
+            font-size: 25px;
+
+            animation: floatUp linear forwards;
+
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform:
+                    translateY(0)
+                    rotate(0deg)
+                    scale(0.5);
+
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.9;
+            }
+
+            50% {
+                transform:
+                    translateY(-50vh)
+                    rotate(180deg)
+                    scale(1);
+            }
+
+            100% {
+                transform:
+                    translateY(-115vh)
+                    rotate(360deg)
+                    scale(0.7);
+
+                opacity: 0;
+            }
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.2);
+            }
+
+            30% {
+                transform: scale(1);
+            }
+
+            45% {
+                transform: scale(1.15);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Efect pentru mesajul apărut */
+        .message {
+            position: fixed;
+            z-index: 100;
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%) scale(0);
+
+            width: min(85%, 500px);
+            padding: 40px;
+
+            background: white;
+            border-radius: 25px;
+
+            text-align: center;
+
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.3);
+
+            transition: 0.5s;
+        }
+
+        .message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .message h2 {
+            color: #ff4f81;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
+
+        .message p {
+            color: #555;
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .close {
+            margin-top: 25px;
+            background: #ff4f81;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Inimioarele animate -->
+    <div class="hearts" id="hearts"></div>
+
+    <!-- Cardul principal -->
+    <div class="card">
+
+        <span class="big-heart">❤️</span>
+
+        <h1>Lovee You!</h1>
+
+        <p>
+            Bellushaa💕
+        </p>
+
+        <button onclick="showMessage()">
+            Apasă aici ❤️
+        </button>
+
+    </div>
+
+    <!-- Mesaj popup -->
+    <div class="message" id="message">
+
+        <h2>❤️ For the most beautiful Girll❤️</h2>
+
+        <p>
+            Ești una dintre cele mai adorabile,simpatice si placute persoane care le stiu ! (posibil si dintre cele mai importante😅)
+           
+            <br><br>
+            💕
+        </p>
+
+        <button class="close" onclick="closeMessage()">
+            Închide
+        </button>
+
+    </div>
+
+
+    <script>
+
+        const heartsContainer = document.getElementById("hearts");
+
+        // Creează o inimioară
+        function createHeart() {
+
+            const heart = document.createElement("div");
+
+            heart.classList.add("heart");
+
+            // Mai multe tipuri de inimioare
+            const hearts = ["❤️", "💗", "💕", "💖", "💓", "💘"];
+
+            heart.innerHTML =
+                hearts[Math.floor(Math.random() * hearts.length)];
+
+            // Poziție aleatoare
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            // Mărime aleatoare
+            heart.style.fontSize =
+                (15 + Math.random() * 35) + "px";
+
+            // Durată aleatoare
+            heart.style.animationDuration =
+                (5 + Math.random() * 6) + "s";
+
+            // Întârziere mică
+            heart.style.animationDelay =
+                Math.random() * 2 + "s";
+
+            heartsContainer.appendChild(heart);
+
+            // Șterge inimioara după animație
+            setTimeout(() => {
+                heart.remove();
+            }, 12000);
+        }
+
+        // Creează inimioare continuu
+        setInterval(createHeart, 250);
+
+
+        // Popup
+        function showMessage() {
+
+            document
+                .getElementById("message")
+                .classList.add("show");
+
+            // Explozie de inimioare
+            for (let i = 0; i < 30; i++) {
+
+                setTimeout(() => {
+                    createHeart();
+                }, i * 50);
+
+            }
+        }
+
+
+        function closeMessage() {
+
+            document
+                .getElementById("message")
+                .classList.remove("show");
+
+        }
+
+    </script>
+
+</body>
+</html>
+
